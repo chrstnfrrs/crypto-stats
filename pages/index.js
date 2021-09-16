@@ -1,12 +1,22 @@
-import NextAuth from "../components/NextAuth"
+import { $fetch } from 'ohmyfetch'
 
-const Home = () => {
+const Home = ({ priceBTC }) => {
   return (
     <div>
-      <p>Hello</p>
-      <NextAuth />
+      <strong>Bitcoin</strong>
+      <p>{priceBTC}</p>
     </div>
   )
+}
+
+export const getServerSideProps = async () => {
+  const {data: priceBTC} = await $fetch('http://localhost:3000/api/coins/btc')
+
+  return {
+    props: {
+      priceBTC
+    }
+  }
 }
 
 export default Home
